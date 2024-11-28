@@ -1,0 +1,46 @@
+<div class="container-fluid p-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-body p-3 rounded-3 bg-dark text-white">
+                <h3 class="text-center">Lista de Recepciones de Ganado</h3>
+                <table class="table table-bordered table-striped text-white">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Reemo</th>
+                            <th>Motivo</th>
+                            <th>Fecha de Recepción</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Animales</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each recepciones}}
+                            <tr>
+                                <td>{{@index}}</td> <!-- Mostrar el índice empezando desde 1 -->
+                                <td>{{reemo}}</td>
+                                <td>{{motivo}}</td>
+                                <td>{{arrivalDate}}</td>
+                                <td>{{origin}}</td>
+                                <td>{{destino}}</td>
+                                <td>{{#if ganado}}{{ganado.length}}{{else}}0{{/if}}</td> <!-- Mostrar número de animales -->
+                                <td>
+                                    <a href="/ganado/listGanado/{{_id}}" class="btn btn-warning btn-sm">Ver Animales</a>
+                                    <a href="/ganado/edit/{{_id}}" class="btn btn-info btn-sm">Editar</a>
+                                    <form action="/ganado/delete/{{_id}}" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <a href="/ganado/add" class="btn btn-primary">Agregar Nueva Recepción</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

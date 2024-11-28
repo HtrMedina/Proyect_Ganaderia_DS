@@ -1,0 +1,59 @@
+<div class="container-fluid p-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card card-body p-3 rounded-3 bg-dark text-white">
+                <h3 class="text-center">Agregar Animales</h3>
+                <form action="/ganado/addAnimales/{{recepcionId}}" method="POST">
+                    <div class="mb-1">
+                        <label for="earTag">Número de Arete</label>
+                        <input type="text" name="earTag" id="earTag" placeholder="Ingresa el número de arete" class="form-control rounded-2 bg-white text-dark" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="sex">Sexo</label>
+                        <select name="sex" id="sex" class="form-control rounded-2 bg-white text-dark" required>
+                            <option value="Toro">Toro</option>
+                            <option value="Vaca">Vaca</option>
+                        </select>
+                    </div>
+                    <div class="mb-1">
+                        <label for="age">Edad (meses)</label>
+                        <input type="number" name="age" id="age" placeholder="Ingresa la edad del animal" class="form-control rounded-2 bg-white text-dark" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="classification">Clasificación</label>
+                        <select name="classification" id="classification" class="form-control rounded-2 bg-white text-dark" required>
+                            <option value="Becerro/Becerra">Becerro/Becerra</option>
+                            <option value="Torete/Vacona">Torete/Vacona</option>
+                            <option value="Toro/Vaca">Toro/Vaca</option>
+                        </select>
+                    </div>
+                    <div class="mb-1">
+                        <label for="weight">Peso (kg)</label>
+                        <input type="number" name="weight" id="weight" placeholder="Ingresa el peso del animal" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-1">
+                        <label for="price">Precio</label>
+                        <input type="number" name="price" id="price" placeholder="Ingresa el precio del animal" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-1">
+                        <label for="healthStatus">Estado de Salud</label>
+                        <select name="healthStatus" id="healthStatus" class="form-control rounded-2 bg-white text-dark">
+                            <option value="Sano">Sano</option>
+                            <option value="Enfermo">Enfermo</option>
+                            <option value="Herido">Herido</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-success"><i class="bi bi-plus-circle"></i> Agregar Animal</button>
+                    </div>
+                </form>
+                                <!-- Botón para finalizar la recepción de ganado -->
+                <form action="/ganado/saveRecepcion/{{recepcionId}}" method="POST">
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Finalizar Recepción</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

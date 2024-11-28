@@ -1,0 +1,36 @@
+<div class="container-fluid p-4">
+  <!-- Botón para volver a la página anterior -->
+  <div class="text-center mb-2">
+    <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
+  </div>
+  
+  <h3 class="text-center">Registrar Nueva Venta</h3>
+  
+  <form action="/ventas/add" method="POST">
+    <div class="form-group">
+      <label for="reemo">Reemo</label>
+      <input type="text" name="reemo" id="reemo" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="ganado">Ganado Vendido (números de arete)</label>
+      <textarea name="ganado" id="ganado" class="form-control" required></textarea>
+      <small>Ingrese los números de arete separados por comas</small>
+    </div>
+    <div class="form-group">
+      <label for="totalAmount">Total de la Venta</label>
+      <input type="number" name="totalAmount" id="totalAmount" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label for="customer">Cliente</label>
+      <input type="text" name="customer" id="customer" class="form-control" required>
+    </div>
+    <div class="form-group mb-2">
+      <label for="status">Estado de Pago</label>
+      <select name="status" id="status" class="form-control">
+        <option value="Pendiente">Pendiente</option>
+        <option value="Pagado">Pagado</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar Venta</button>
+  </form>
+</div>

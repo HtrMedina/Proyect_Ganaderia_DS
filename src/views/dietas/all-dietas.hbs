@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <!-- Botón para agregar una nueva dieta -->
+  <div class="mb-4 text-center">
+    <a href="/dietas/new" class="btn btn-success btn-lg">
+      <i class="fas fa-plus"></i> Crear nueva dieta
+    </a>
+  </div>
+
+  <!-- Lista de dietas -->
+  <div class="row">
+    {{#each dietas}}
+      <div class="col-md-3 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title d-flex justify-content-between align-items-center">
+              {{nombre}} 
+              <a href="/dietas/edit/{{_id}}" class="btn btn-warning btn-sm">
+                <i class="fas fa-edit"></i> Editar
+              </a>
+            </h4>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+              {{#each ingredientes}}
+                <li>{{ingrediente}}: {{cantidad}} Kgs</li>
+              {{/each}}
+            </ul>
+            <!-- Formulario para eliminar la dieta -->
+            <form action="/dietas/delete/{{_id}}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta dieta?');">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {{else}}
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-center">No hay dietas disponibles.</h1>
+            <p class="lead text-center">Aún no has creado ninguna dieta. ¡Empieza ahora!</p>
+            <a href="/dietas/new" class="btn btn-success btn-block">Crear una nueva dieta</a>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

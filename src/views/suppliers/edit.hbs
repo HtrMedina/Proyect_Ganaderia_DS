@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 offset-md-3">
+            <div class="card card-body bg-dark p-4 text-white rounded-5">
+                <div class="card-header text-center">
+                    <h2>Editar Proveedor</h2>
+                </div>
+                <form action="/suppliers/edit/{{supplier._id}}" method="POST">
+                    <div class="mb-3">
+                        <label for="supplierName">Proveedor</label>
+                        <input type="text" name="supplierName" placeholder="Ingresa un proveedor" 
+                        value="{{supplier.supplierName}}" class="form-control rounded-0 bg-dark text-white">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone">Telefono</label>
+                        <input type="text" name="phone" placeholder="Ingresa un telefono" 
+                        value="{{supplier.phone}}" class="form-control rounded-0 bg-dark text-white">
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-info"><i class="bi bi-check2-circle"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

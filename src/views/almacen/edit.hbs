@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <!-- Columna para el formulario -->
+        <div class="col-md-5">
+            <div class="card card-body bg-dark p-3 text-white rounded-5">
+                <div class="card-header text-center">
+                    <h2>Editar Inventario</h2>
+                </div>
+                <form action="/almacen/edit/{{almacen._id}}" method="POST">
+                    <div class="mb-2">
+                        <label for="name">Nombre</label>
+                        <input type="text" name="name" placeholder="Ingresa un producto" 
+                        value="{{almacen.name}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="quantity">Cantidad</label>
+                        <input type="text" name="quantity" placeholder="Ingresa una cantidad" 
+                        value="{{almacen.quantity}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="unit">Unidad</label>
+                        <select name="unit" id="unit" class="form-control rounded-2 bg-white text-dark">
+                            <option value="" selected disabled>{{almacen.unit}}</option> <!-- Opción por defecto que no puede ser seleccionada -->
+                            <option value="kg">kg</option>
+                            <option value="pza">pza</option>
+                            <option value="litro">litro</option>
+                            <option value="saco">saco</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label for="priceUnit">Precio Unitario</label>
+                        <input type="text" name="priceUnit" placeholder="Ingresa un precio unitario" 
+                        value="{{almacen.priceUnit}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="category">Categoría</label>
+                        <select name="category" id="category" class="form-control rounded-2 bg-white text-dark">
+                            <option value="" selected disabled>{{almacen.category}}</option> <!-- Opción por defecto que no puede ser seleccionada -->
+                            <option value="Ingrediente">Ingrediente</option>
+                            <option value="Medicamento">Medicamento</option>
+                            <option value="Suministro">Suministro</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-info"><i class="bi bi-check2-circle"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Columna para la imagen ilustrativa -->
+        <div class="col-md-6">
+            <img src="/img/almacen.webp" alt="Imagen ilustrativa" class="img-fluid rounded-5">
+        </div>
+    </div>
+</div>

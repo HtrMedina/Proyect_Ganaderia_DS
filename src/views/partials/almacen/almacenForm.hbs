@@ -1,0 +1,42 @@
+<div class="card card-body p-3 rounded-3 bg-dark text-white">
+    <h3 class="text-center">Agregar Inventario</h3>
+    <form action="/almacen/add" method="POST">
+        <div class="mb-2">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" placeholder="Ingresa un producto" 
+            id="name" class="form-control rounded-2 bg-white text-dark" required>
+        </div>
+        <div class="mb-2">
+            <label for="quantity">Cantidad</label>
+            <input type="text" name="quantity" placeholder="Ingresa una cantidad" 
+            id="quantity" class="form-control rounded-2 bg-white text-dark" required>
+        </div>
+        <div class="mb-2">
+            <label for="unit">Unidad</label>
+            <select name="unit" id="unit" class="form-control rounded-2 bg-white text-dark" required>
+                <option value="" selected disabled>Selecciona una opción</option> <!-- Opción por defecto que no puede ser seleccionada -->
+                <option value="kg">kg</option>
+                <option value="pza">pza</option>
+                <option value="litro">litro</option>
+                <option value="saco">saco</option>
+            </select>
+        </div>
+        <div class="mb-2">
+            <label for="priceUnit">PrecioUnitario</label>
+            <input type="text" name="priceUnit" placeholder="Ingresa un producto" 
+            id="priceUnit" class="form-control rounded-2 bg-white text-dark" required>
+        </div>
+        <div class="mb-2">
+            <label for="category">Categoría</label>
+            <select name="category" id="category" class="form-control rounded-2 bg-white text-dark" required>
+                <option value="" selected disabled>Selecciona una opción</option> <!-- Opción por defecto que no puede ser seleccionada -->
+                <option value="Ingrediente">Ingrediente</option>
+                <option value="Medicamento">Medicamento</option>
+                <option value="Suministro">Suministro</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary"><i class="bi bi-check2-circle"></i> Agregar</button>
+        </div>
+    </form>
+</div>

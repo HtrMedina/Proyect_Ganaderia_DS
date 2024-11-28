@@ -1,0 +1,78 @@
+<!-- Vista de Crear Dieta -->
+<div class="col-md-6 mx-auto">
+  <div class="card">
+    <div class="card-header bg-dark text-center">
+      <h3 class="text-white">Nueva Dieta</h3>
+    </div>
+    <div class="card-body text-right">
+      <form action="/dietas" method="POST">
+        <!-- Campo para el nombre de la dieta -->
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre de la dieta:</label>
+          <input
+            type="text"
+            name="nombre"
+            class="form-control"
+            placeholder="Nombre de la dieta"
+            autofocus
+            required
+          />
+        </div>
+
+        <!-- Campo para ingredientes dinámicos -->
+        <div class="mb-3">
+          <label for="ingredientes" class="form-label">Ingredientes:</label>
+          <div id="ingredientes-container">
+            <!-- Primer ingrediente y cantidad -->
+            <div class="input-group mb-2">
+              <input type="text" name="ingredientes[]" class="form-control" placeholder="Ingrediente (ej: Arroz)" required>
+              <input type="number" name="cantidades[]" class="form-control" placeholder="Cantidad (ej: 200)" required>
+              <button type="button" class="btn btn-danger remove-ingredient">X</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" id="add-ingredient">Agregar Ingrediente</button>
+        </div>
+
+
+        <!-- Botón para enviar el formulario -->
+        <button class="btn btn-primary w-100" type="submit">
+          <i class="bi bi-check2-circle"></i> Agregar Dieta
+        </button>
+      </form>
+
+      <!-- Mostrar errores si existen -->
+      {{#if errors}}
+        <div class="alert alert-danger mt-3">
+          <ul>
+            {{#each errors}}
+              <li>{{this.text}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript para manejar los ingredientes dinámicos -->
+<script>
+  // Agregar un nuevo ingrediente
+  document.getElementById("add-ingredient").addEventListener("click", function() {
+    const container = document.getElementById("ingredientes-container");
+    const newIngredient = document.createElement("div");
+    newIngredient.classList.add("input-group", "mb-2");
+    newIngredient.innerHTML = `
+      <input type="text" name="ingredientes[]" class="form-control" placeholder="Ingrediente" required>
+      <input type="number" name="cantidades[]" class="form-control" placeholder="Cantidad" required>
+      <button type="button" class="btn btn-danger remove-ingredient">X</button>
+    `;
+    container.appendChild(newIngredient);
+  });
+
+  // Eliminar un ingrediente
+  document.getElementById("ingredientes-container").addEventListener("click", function(event) {
+    if (event.target.classList.contains("remove-ingredient")) {
+      event.target.parentElement.remove();
+    }
+  });
+</script>

@@ -1,0 +1,86 @@
+<div class="container-fluid p-4">
+    <div class="row">
+        <!-- Formulario para ingresar un nuevo tratamiento -->
+        <div class="col-md-4">
+            <div class="card card-body p-3 rounded-3 bg-dark text-white">
+                <h3 class="text-center">Ingresar un Tratamiento</h3>
+                <form action="/tratamientos" method="POST">
+                    <div class="mb-1">
+                        <label for="numeroArete">Número de Arete</label>
+                        <input type="text" name="numeroArete" placeholder="Ingresa el número de arete" id="numeroArete" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-1">
+                        <label for="tipoTratamiento">Tipo de Tratamiento</label>
+                        <select name="tipoTratamiento" id="tipoTratamiento" class="form-control rounded-2 bg-white text-dark">
+                            <option value="Preventivo">Preventivo</option>
+                            <option value="Curativo">Curativo</option>
+                        </select>
+                    </div>
+                    <div class="mb-1">
+                        <label for="proposito">Propósito</label>
+                        <input type="text" name="proposito" placeholder="Ingresa el propósito del tratamiento" id="proposito" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-1">
+                        <label for="nombreMedicamento">Nombre del Medicamento</label>
+                        <input type="text" name="nombreMedicamento" placeholder="Ingresa el nombre del medicamento" id="nombreMedicamento" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-1">
+                        <label for="fechaColocacion">Fecha de Colocación</label>
+                        <input type="date" name="fechaColocacion" id="fechaColocacion" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-3">
+                        <label for="quienColoco">¿Quién lo colocó?</label>
+                        <input type="text" name="quienColoco" placeholder="Ingresa el nombre de quien colocó el tratamiento" id="quienColoco" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary"><i class="bi bi-person-check-fill"></i> Agregar Tratamiento</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Tabla de tratamientos -->
+        <div class="col-md-8">
+            {{#if tratamientos}}
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>N.</th>
+                        <th>Número de Arete</th>
+                        <th>Tipo de Tratamiento</th>
+                        <th>Propósito</th>
+                        <th>Medicamento</th>
+                        <th>Fecha de Colocación</th>
+                        <th>¿Quién lo Colocó?</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each tratamientos}}
+                    <tr>
+                        <td>{{@index}}</td>
+                        <td>{{numeroArete}}</td>
+                        <td>{{tipoTratamiento}}</td>
+                        <td>{{proposito}}</td>
+                        <td>{{nombreMedicamento}}</td>
+                        <td>{{fechaFormateada}}</td>
+                        <td>{{quienColoco}}</td>
+                        <td>
+                            <a href="/tratamientos/edit/{{_id}}" class="btn btn-info"><i class="bi bi-pencil-square"></i></a>
+                            <a href="/tratamientos/delete/{{_id}}" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{else}}
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <div class="text-center">
+                    <h1 class="text-center">No hay Tratamientos</h1>
+                    <img src="/img/caja.png" style="width: 50%; height: auto;" >
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>

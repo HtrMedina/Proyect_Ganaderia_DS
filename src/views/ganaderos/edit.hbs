@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+        <!-- Columna para el formulario -->
+        <div class="col-md-5">
+            <div class="card card-body bg-dark p-3 text-white rounded-5">
+                <div class="card-header text-center">
+                    <h2>Editar Ganadero</h2>
+                </div>
+                <form action="/ganaderos/edit/{{ganadero._id}}" method="POST">
+                    <div class="mb-2">
+                        <label for="psg">PSG</label>
+                        <input type="text" name="psg" placeholder="Ingresa el psg" 
+                        value="{{ganadero.psg}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" placeholder="Ingresa el nombre" 
+                        value="{{ganadero.nombre}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="razonSocial">Razon Social</label>
+                        <input type="text" name="razonSocial" placeholder="Ingresa la razon social" 
+                        value="{{ganadero.razonSocial}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="domicilio">Domicilio</label>
+                        <input type="text" name="domicilio" placeholder="Ingresa el domicilio" 
+                        value="{{ganadero.domicilio}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="localidad">Localidad</label>
+                        <input type="text" name="localidad" placeholder="Ingresa el localidad" 
+                        value="{{ganadero.localidad}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="municipio">Municipio</label>
+                        <input type="text" name="municipio" placeholder="Ingresa el municipio" 
+                        value="{{ganadero.municipio}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="mb-2">
+                        <label for="estado">Estado</label>
+                        <input type="text" name="estado" placeholder="Ingresa el estado" 
+                        value="{{ganadero.estado}}" class="form-control rounded-2 bg-white text-dark">
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-info"><i class="bi bi-check2-circle"></i> Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Columna para la imagen ilustrativa -->
+        <div class="col-md-6">
+            <img src="/img/almacen.webp" alt="Imagen ilustrativa" class="img-fluid rounded-5">
+        </div>
+    </div>
+</div>

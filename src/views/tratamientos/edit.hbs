@@ -1,0 +1,42 @@
+<div class="container-fluid p-4">
+    <div class="row">
+        <!-- Formulario para editar un tratamiento -->
+        <div class="col-md-6 mx-auto">
+            <div class="card card-body p-3 rounded-3 bg-dark text-white">
+                <h3 class="text-center">Editar Tratamiento</h3>
+                <form action="/tratamientos/edit/{{tratamiento._id}}" method="POST">
+                    <div class="mb-1">
+                        <label for="numeroArete">Número de Arete</label>
+                        <input type="text" name="numeroArete" placeholder="Número de arete" id="numeroArete" class="form-control rounded-2 bg-white text-dark" value="{{tratamiento.numeroArete}}" required>
+                    </div>
+                        <div class="mb-1">
+                            <label for="tipoTratamiento">Tipo de Tratamiento</label>
+                            <select class="form-control" id="tipoTratamiento" name="tipoTratamiento">
+                                <option value="Preventivo" {{#if esPreventivo}}selected{{/if}}>Preventivo</option>
+                                <option value="Curativo" {{#if esCurativo}}selected{{/if}}>Curativo</option>
+                            </select>
+                        </div>
+                    <div class="mb-1">
+                        <label for="proposito">Propósito</label>
+                        <input type="text" name="proposito" placeholder="Ingresa el propósito del tratamiento" id="proposito" class="form-control rounded-2 bg-white text-dark" value="{{tratamiento.proposito}}" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="nombreMedicamento">Nombre del Medicamento</label>
+                        <input type="text" name="nombreMedicamento" placeholder="Ingresa el nombre del medicamento" id="nombreMedicamento" class="form-control rounded-2 bg-white text-dark" value="{{tratamiento.nombreMedicamento}}" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="fechaColocacion">Fecha de Colocación</label>
+                        <input type="date" name="fechaColocacion" id="fechaColocacion" class="form-control rounded-2 bg-white text-dark" value="{{fechaFormateada}}" required>
+                    </div>
+                    <div class="mb-1">
+                        <label for="quienColoco">¿Quién lo colocó?</label>
+                        <input type="text" name="quienColoco" placeholder="Ingresa el nombre de quien colocó el tratamiento" id="quienColoco" class="form-control rounded-2 bg-white text-dark" value="{{tratamiento.quienColoco}}" required>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-success"><i class="bi bi-check-circle"></i> Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

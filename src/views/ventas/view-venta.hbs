@@ -1,0 +1,22 @@
+<div class="container-fluid p-4">
+  <h3 class="text-center">Detalles de la Venta</h3>
+  <div class="card">
+    <div class="card-body">
+      <h5>Reemo: {{venta.reemo}}</h5>
+      <p><strong>Cliente:</strong> {{venta.customer}}</p>
+      <p><strong>Total de la Venta:</strong> ${{venta.totalAmount}}</p>
+      <p><strong>Estado de Pago:</strong> {{venta.status}}</p>
+      <p><strong>Fecha de Venta:</strong> {{venta.saleDateFormatted}}</p>
+
+      <h5>Ganado Vendido:</h5>
+      <ul>
+        {{#each venta.ganado}}
+          <li>Num Arete: {{this.earTag}}, Precio: ${{this.price}}, Peso: {{this.weight}} Kgs, Clasificación: {{this.classification}}</li>
+        {{/each}}
+      </ul>
+
+      <!-- Botón para descargar el PDF -->
+      <a href="/ventas/{{venta._id}}/pdf" class="btn btn-success">Descargar PDF</a>
+    </div>
+  </div>
+</div>

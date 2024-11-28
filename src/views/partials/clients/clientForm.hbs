@@ -1,0 +1,28 @@
+<div class="card card-body p-4 rounded-3 bg-dark text-white">
+    <h3 class="text-center">Ingresar un Cliente</h3>
+    <form action="/clients/add" method="POST">
+        <div class="mb-3">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" placeholder="Ingresa un nombre" 
+            id="name" class="form-control rounded-0 bg-dark text-white">
+        </div>
+        <div class="mb-3">
+            <label for="address">Direccion</label>
+            <input type="text" name="address" placeholder="Ingresa una direccion" 
+            id="address" class="form-control rounded-0 bg-dark text-white">
+        </div>
+        <div class="mb-3">
+            <label for="postalCode">Codigo Postal</label>
+            <input type="text" name="postalCode" placeholder="Ingresa un CP" 
+            id="postalCode" class="form-control rounded-0 bg-dark text-white">
+        </div>
+        <div class="mb-3">
+            <label for="phone">Telefono</label>
+            <input type="text" name="phone" placeholder="Ingresa un telefono" 
+            id="phone" class="form-control rounded-0 bg-dark text-white">
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary"><i class="bi bi-person-check-fill"></i> Agregar</button>
+        </div>
+    </form>
+</div>

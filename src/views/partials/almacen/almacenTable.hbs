@@ -1,0 +1,49 @@
+{{#if almacenes}}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>N.</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Unidad</th>
+            <th>PrecioUnitario</th>
+            <th>Inversion</th>
+            <th>Categoria</th>
+            <th>Fecha</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each almacenes}}
+        <tr>
+            <td>{{@index}}</td>
+            <td>{{name}}</td>
+            <td>{{quantity}}</td>
+            <td>{{unit}}</td>
+            <td><i class="bi bi-currency-dollar"></i>{{priceUnit}}</td>
+            <td><i class="bi bi-currency-dollar"></i>{{investment}}</td>
+            <td>{{category}}</td>
+            <td>{{formattedIngresoDate}}</td>
+            <td>
+                <a href="/almacen/edit/{{_id}}" class="btn btn-info"><i class="bi bi-pencil-square"></i></a>
+                <form action="/almacen/delete/{{_id}}?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
+                </form>
+
+                <a href="/almacen/addQuantity/{{_id}}" class="btn btn-primary"><i class="bi bi-plus-circle"></i></a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="text-center">
+        <h1 class="text-center">No hay Inventario</h1>
+        <img src="/img/caja.png" style="width: 50%; height: auto;" >
+    </div>
+</div>
+{{/if}}
+
+
+

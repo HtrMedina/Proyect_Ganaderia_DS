@@ -1,0 +1,39 @@
+{{#if products}}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>N.</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+        <tr>
+            <td>{{@index}}</td>
+            <td>{{name}}</td>
+            <td>{{quantity}}</td>
+            <td><i class="bi bi-currency-dollar"></i>{{price}}</td>
+            <td>
+                <a href="/products/edit/{{_id}}" class="btn btn-info"><i class="bi bi-pencil-square"></i> Editar</a>
+                <form action="/products/delete/{{_id}}?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i> Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="text-center">
+        <h1 class="text-center">No hay Productos</h1>
+        <img src="/img/productos.png" style="width: 50%; height: auto;" >
+    </div>
+</div>
+{{/if}}
+
+
+

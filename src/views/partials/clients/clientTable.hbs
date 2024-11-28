@@ -1,0 +1,39 @@
+{{#if clients}}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>N.</th>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>CP</th>
+            <th>Telefono</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each clients}}
+        <tr>
+            <td>{{@index}}</td>
+            <td>{{name}}</td>
+            <td>{{address}}</td>
+            <td>{{postalCode}}</td>
+            <td>{{phone}}</td>
+            <td>
+                <a href="/clients/edit/{{_id}}" class="btn btn-info"><i class="bi bi-pencil-square"></i></a>
+                <form action="/clients/delete/{{_id}}?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{else}}
+<div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="text-center">
+        <h1 class="text-center">No hay Clientes</h1>
+        <img src="/img/usuarios.png" style="width: 50%; height: auto;" >
+    </div>
+</div>
+{{/if}}
+
