@@ -1,15 +1,17 @@
 <div class="container-fluid p-4">
-  <!-- Botón para volver a la página anterior -->
-  <div class="text-center mb-2">
-    <a href="javascript:history.back()" class="btn btn-secondary">Volver</a>
-  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <!-- Botón de "Regresar" con JavaScript -->
+      <button onclick="window.history.back();" class="btn btn-primary mb-3">Regresar</button>
+
+      <div class="card card-body p-3 rounded-3 bg-dark text-white">
   
   <h3 class="text-center">Registrar Nueva Venta</h3>
   
   <form action="/ventas/add" method="POST">
     <div class="form-group">
       <label for="reemo">Reemo</label>
-      <input type="text" name="reemo" id="reemo" class="form-control" required>
+      <input type="text" name="reemo" id="reemo" class="form-control" placeholder="Ingrese el REEMO" required>
     </div>
     <div class="form-group">
       <label for="ganado">Ganado Vendido (números de arete)</label>
@@ -18,11 +20,11 @@
     </div>
     <div class="form-group">
       <label for="totalAmount">Total de la Venta</label>
-      <input type="number" name="totalAmount" id="totalAmount" class="form-control" required>
+      <input type="number" name="totalAmount" id="totalAmount" class="form-control" placeholder="Total" required>
     </div>
     <div class="form-group">
       <label for="customer">Cliente</label>
-      <input type="text" name="customer" id="customer" class="form-control" required>
+      <input type="text" name="customer" id="customer" class="form-control" placeholder="Nombre del Cliente" required>
     </div>
     <div class="form-group mb-2">
       <label for="status">Estado de Pago</label>
@@ -33,4 +35,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Registrar Venta</button>
   </form>
+      </div>
+    </div>
+  </div>
 </div>
