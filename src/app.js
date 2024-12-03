@@ -1,3 +1,4 @@
+// Importación de librerías de terceros
 import express from "express";
 import exphbs from "express-handlebars";
 import session from "express-session";
@@ -10,27 +11,27 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import bodyParser from 'body-parser';
 
+// Archivos de configuración
 import { MONGODB_URI, PORT } from "./config.js";
 
+// Rutas de la aplicación
 import indexRoutes from "./routes/index.routes.js";
 import notesRoutes from "./routes/notes.routes.js";
 import userRoutes from "./routes/auth.routes.js";
 import ganadoRoutes from "./routes/ganaderia.routes.js";
+
+// Archivos de configuración adicionales
 import "./config/passport.js";
 
-// Initializations
+// Inicializaciones
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// settings
+// Configuración de la app
 app.set("port", PORT);
 app.set("views", join(__dirname, "views"));
 
-// Configuración de los middleware
-app.use(bodyParser.urlencoded({ extended: true })); // Middleware para procesar datos de formularios (urlencoded)
-app.use(bodyParser.json()); // Middleware para procesar datos JSON
-
-// config view engine
+// Configuración del motor de plantillas
 const hbs = exphbs.create({
   defaultLayout: "main",
   layoutsDir: join(app.get("views"), "layouts"),
@@ -40,7 +41,11 @@ const hbs = exphbs.create({
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
-// middlewares
+// Middleware de la app
+app.use(bodyParser.urlencoded({ extended: true })); // Para procesar datos de formularios (urlencoded)
+app.use(bodyParser.json()); // Para procesar datos JSON
+
+// Middlewares adicionales
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
@@ -56,7 +61,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-// Global Variables
+// Variables globales
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
@@ -65,19 +70,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// routes
+// Rutas
 app.use(indexRoutes);
 app.use(userRoutes);
 app.use(notesRoutes);
 app.use(ganadoRoutes);
 
-// static files
+// Archivos estáticos
 app.use(express.static(join(__dirname, "public")));
 
+// Página no encontrada (404)
 app.use((req, res, next) => {
   return res.status(404).render("404");
 });
 
+// Manejo de errores
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.render("error", {
@@ -85,4 +92,5 @@ app.use((error, req, res, next) => {
   });
 });
 
+// Exportación de la app
 export default app;

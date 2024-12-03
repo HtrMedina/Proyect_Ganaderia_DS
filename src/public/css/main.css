@@ -15,17 +15,40 @@ main {
   padding: 10px;
 }
 
-section.card {
-  margin-bottom: 20px;  /* Agrega espacio en la parte inferior del section */
+.carousel-inner .carousel-item img {
+  width: 100%; /* Hace que las imágenes ocupen todo el ancho del contenedor */
+  height: 400px; /* Ajusta la altura de las imágenes, puedes modificar este valor según sea necesario */
+  object-fit: cover; /* Asegura que las imágenes se recorten proporcionalmente si es necesario para llenar el contenedor */
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
 }
 
 #carouselExampleIndicators {
-  max-width: 600px; /* Establece un ancho máximo de 600px */
-  width: 100%;      /* Asegura que el contenedor use el 100% de su contenedor padre */
-  float: right;      /* Alinea el carrusel a la izquierda */
+  flex: 1;
+  max-width: 75%;
 }
 
-#carouselExampleIndicators img {
-  max-height: 400px; /* Limita la altura de las imágenes */
-  object-fit: cover; /* Hace que la imagen se ajuste al contenedor sin distorsionarse */
+.info-section {
+  flex: 1;
+  max-width: 25%;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  #carouselExampleIndicators,
+  .info-section {
+    max-width: 100%;
+  }
 }
