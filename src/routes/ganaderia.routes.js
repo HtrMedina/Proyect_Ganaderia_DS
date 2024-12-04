@@ -62,7 +62,7 @@ router.post('/ganado/edit/:id', isAuthenticated, actualizarRecepcion);
 router.get("/ganado/listGanado/:id", isAuthenticated, renderGanado);
 
 
-import { renderVentas, createVenta, renderVenta, downloadVentaPDF } from '../controllers/ventas.controllers.js';
+import { renderVentas, createVenta, renderVenta, downloadVentaPDF, cambiarStatusVenta } from '../controllers/ventas.controllers.js';
 
 // Ruta para ver todas las ventas
 router.get('/ventas', isAuthenticated, renderVentas);
@@ -73,6 +73,8 @@ router.post('/ventas/add', isAuthenticated, createVenta);
 router.get('/ventas/:id', isAuthenticated, renderVenta);
 // Ruta para descargar el PDF de la venta
 router.get('/ventas/:id/pdf', isAuthenticated, downloadVentaPDF);
+// Ruta para cambiar el estado de una venta
+router.post('/ventas/:id/cambiar-status', isAuthenticated, cambiarStatusVenta);
 
 
 

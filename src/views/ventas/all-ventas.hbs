@@ -29,7 +29,16 @@
           <td>{{customer}}</td>
           <td>${{totalAmount}}</td>
           <td>{{saleDateFormatted}}</td>
-          <td>{{status}}</td>
+          <td>
+            <!-- Formulario para cambiar el estado -->
+            <form action="/ventas/{{_id}}/cambiar-status" method="POST" class="d-inline">
+              <button type="submit" class="btn btn-sm {{#if isPendiente}}btn-warning{{else}}btn-success{{/if}}">
+                {{#if isPendiente}}Pendiente{{else}}Pagado{{/if}}
+              </button>
+            </form>
+          </td>
+
+
           <td>
             <a href="/ventas/{{_id}}" class="btn btn-info btn-sm">Ver Detalles</a>
           </td>

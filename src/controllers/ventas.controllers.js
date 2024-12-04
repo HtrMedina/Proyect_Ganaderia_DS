@@ -8,6 +8,33 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url); // Convierte la URL a la ruta del archivo
 const __dirname = dirname(__filename); // Obtiene el directorio del archivo actual
 
+// Cambiar el estado de la venta
+export const cambiarStatusVenta = async (req, res) => {
+  try {
+    const ventaId = req.params.id; // Obtener el ID de la venta de la URL
+
+    // Buscar la venta por ID
+    const venta = await Venta.findById(ventaId);
+
+    if (!venta) {
+      return res.status(404).send('Venta no encontrada');
+    }
+
+    // Cambiar el estado de la venta
+    venta.status = (venta.status === 'Pendiente') ? 'Pagado' : 'Pendiente';
+
+    // Guardar los cambios
+    await venta.save();
+
+    // Redirigir a la vista de ventas
+    res.redirect('/ventas');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al actualizar el estado de la venta');
+  }
+};
+
+
 // Renderizar todas las ventas
 export const renderVentas = async (req, res) => {
     try {
@@ -23,7 +50,9 @@ export const renderVentas = async (req, res) => {
         month: '2-digit',
         year: 'numeric',
       }).format(new Date(venta.saleDate));
-      venta.saleDateFormatted = formattedDate;  // dd-mm-yyyy
+      venta.saleDateFormatted = formattedDate;
+      // Calcular el estado para el botón
+      venta.isPendiente = venta.status === 'Pendiente';  // Agregamos una propiedad que indica si está pendiente
     });
 
       // Renderizamos las ventas en la vista
