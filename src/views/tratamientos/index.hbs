@@ -22,8 +22,14 @@
                     </div>
                     <div class="mb-1">
                         <label for="nombreMedicamento">Nombre del Medicamento</label>
-                        <input type="text" name="nombreMedicamento" placeholder="Ingresa el nombre del medicamento" id="nombreMedicamento" class="form-control rounded-2 bg-white text-dark">
+                        <select name="nombreMedicamento" id="nombreMedicamento" class="form-control rounded-2 bg-white text-dark">
+                            <option value="">Selecciona un Medicamento</option>
+                            {{#each medicamentos}}
+                                <option value="{{name}}">{{name}}</option>
+                            {{/each}}
+                        </select>
                     </div>
+
                     <div class="mb-1">
                         <label for="fechaColocacion">Fecha de Colocación</label>
                         <input type="date" name="fechaColocacion" id="fechaColocacion" class="form-control rounded-2 bg-white text-dark">

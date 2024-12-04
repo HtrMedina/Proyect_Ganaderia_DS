@@ -1,27 +1,27 @@
 import Tratamiento from '../models/Tratamiento.js';
+import Almacen from '../models/Almacen.js'; 
 
-// Mostrar todos los tratamientos
 // Mostrar todos los tratamientos
 export const renderTratamientos = async (req, res) => {
     try {
-        const tratamientos = await Tratamiento.find().lean();  // Obtener todos los tratamientos
+        const tratamientos = await Tratamiento.find().lean(); // Obtener todos los tratamientos
         
+        // Obtener todos los medicamentos del almacen
+        const medicamentos = await Almacen.find({ category: 'Medicamento' }).lean();
+
         // Formatear la fecha de cada tratamiento antes de pasarla a la vista
         tratamientos.forEach(tratamiento => {
             const fecha = new Date(tratamiento.fechaColocacion); // Convertir la fecha a un objeto Date
+            const fechaLocal = new Date(fecha.getTime() - fecha.getTimezoneOffset() * 60000); // Ajustar la fecha a la zona horaria local
             
-            // Ajustar la fecha a la zona horaria local
-            const fechaLocal = new Date(fecha.getTime() - fecha.getTimezoneOffset() * 60000);
-            
-            // Formatear la fecha a dd/mm/yyyy
             const dia = ("0" + fechaLocal.getDate()).slice(-2);
-            const mes = ("0" + (fechaLocal.getMonth() + 1)).slice(-2); // Mes (debe sumarse 1 ya que enero es 0)
-            const anio = fechaLocal.getFullYear(); // Obtener el año
+            const mes = ("0" + (fechaLocal.getMonth() + 1)).slice(-2);
+            const anio = fechaLocal.getFullYear();
             
-            tratamiento.fechaFormateada = `${dia}/${mes}/${anio}`; // Formatear la fecha
+            tratamiento.fechaFormateada = `${dia}/${mes}/${anio}`;
         });
 
-        res.render("tratamientos/index", { tratamientos });  // Pasar los tratamientos formateados a la vista
+        res.render("tratamientos/index", { tratamientos, medicamentos });  // Pasar los tratamientos y medicamentos a la vista
     } catch (error) {
         console.log(error);
         res.status(500).send("Error al cargar los tratamientos");
@@ -30,13 +30,13 @@ export const renderTratamientos = async (req, res) => {
 
 
 // Crear un nuevo tratamiento
-// Crear un nuevo tratamiento
 export const createTratamiento = async (req, res) => {
     try {
+        // Desestructurar los datos del formulario
         const { numeroArete, tipoTratamiento, proposito, nombreMedicamento, fechaColocacion, quienColoco } = req.body;
 
-        // La fecha ya debería estar en el formato 'yyyy-mm-dd', sin embargo, la convertimos explícitamente a un objeto Date
-        const fecha = new Date(fechaColocacion);  // 'fechaColocacion' debe estar en formato 'yyyy-mm-dd'
+        // Convertir la fecha de colocación en formato Date
+        const fecha = new Date(fechaColocacion);
 
         // Crear el objeto tratamiento
         const tratamiento = new Tratamiento({
@@ -44,13 +44,32 @@ export const createTratamiento = async (req, res) => {
             tipoTratamiento,
             proposito,
             nombreMedicamento,
-            fechaColocacion: fecha,  // Almacenar la fecha en UTC (la fecha ya está ajustada al formato correcto)
+            fechaColocacion: fecha,
             quienColoco
         });
 
         // Guardar el tratamiento en la base de datos
-        await tratamiento.save();  // Guardar el tratamiento
-        res.redirect('/tratamientos');  // Redirigir al índice de tratamientos
+        await tratamiento.save();
+
+                // Buscar el medicamento en el modelo Almacen por su nombre
+                const medicamento = await Almacen.findOne({ name: nombreMedicamento });  // Buscar por nombre
+
+                if (medicamento) {
+                    // Verificar si hay suficiente cantidad
+                    if (medicamento.quantity > 0) {
+                        // Restar una unidad del medicamento
+                        await Almacen.findByIdAndUpdate(medicamento._id, { $inc: { quantity: -1 } });
+                    } else {
+                        // Si no hay suficiente stock, manejar el error
+                        return res.status(400).send('No hay suficiente stock del medicamento seleccionado');
+                    }
+                } else {
+                    // Si no se encuentra el medicamento
+                    return res.status(404).send('Medicamento no encontrado en el inventario');
+                }
+
+        // Redirigir a la vista de tratamientos
+        res.redirect('/tratamientos');
     } catch (error) {
         console.log(error);
         res.status(500).send("Error al guardar el tratamiento");
@@ -58,16 +77,21 @@ export const createTratamiento = async (req, res) => {
 };
 
 
+
 // Mostrar la página de edición de un tratamiento
 export const renderTratamientoEdit = async (req, res) => {
     const { id } = req.params;
     try {
-        const tratamiento = await Tratamiento.findById(id).lean(); // Obtener el tratamiento por ID
+        // Obtener el tratamiento por ID
+        const tratamiento = await Tratamiento.findById(id).lean();
         
+        // Obtener todos los medicamentos disponibles en el almacén
+        const medicamentos = await Almacen.find({ category: 'Medicamento' }).lean();
+
         // Comparar el tipo de tratamiento y pasar un valor booleano a la vista
         const esPreventivo = tratamiento.tipoTratamiento === 'Preventivo';
         const esCurativo = tratamiento.tipoTratamiento === 'Curativo';
-        
+
         // Ajustar la fecha a la zona horaria local
         const fechaUTC = new Date(tratamiento.fechaColocacion);
         fechaUTC.setMinutes(fechaUTC.getMinutes() - fechaUTC.getTimezoneOffset()); // Ajuste de la zona horaria
@@ -80,7 +104,8 @@ export const renderTratamientoEdit = async (req, res) => {
             tratamiento, 
             esPreventivo, 
             esCurativo,
-            fechaFormateada  // Pasar la fecha formateada
+            fechaFormateada,  // Pasar la fecha formateada
+            medicamentos      // Pasar los medicamentos disponibles
         });
     } catch (error) {
         console.log(error);
@@ -88,8 +113,8 @@ export const renderTratamientoEdit = async (req, res) => {
     }
 };
 
+
 //Editar un tratamiento
-// Editar un tratamiento
 export const editTratamiento = async (req, res) => {
     const { id } = req.params;
     const { numeroArete, tipoTratamiento, proposito, nombreMedicamento, fechaColocacion, quienColoco } = req.body;
