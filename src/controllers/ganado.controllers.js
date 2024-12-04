@@ -1,4 +1,18 @@
 import { Ganado } from '../models/Ganado.js';
+import { Ganadero } from '../models/Ganadero.js';
+
+export const FormularioRecepcion = async (req, res) => {
+  try {
+    // Obtener todos los ganaderos de la base de datos
+    const ganaderos = await Ganadero.find().lean();
+    // Pasar los ganaderos a la vista
+    res.render('ganado/add', { ganaderos });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener los ganaderos');
+  }
+};
+
 
 // Crear recepción de ganado (Paso 1)
 export const createRecepcionGanado = async (req, res) => {
@@ -133,6 +147,7 @@ export const editarRecepcion = async (req, res) => {
     try {
         // Buscar la recepción de ganado por ID
         const recepcion = await Ganado.findById(id).lean();
+        const ganaderos = await Ganadero.find().lean();
 
         const esCria = recepcion.motivo === 'Cria';
         const esEngorda = recepcion.motivo === 'Engorda';
@@ -151,7 +166,7 @@ export const editarRecepcion = async (req, res) => {
         }
 
         // Renderizar el formulario de edición pasando la recepción encontrada
-        res.render('ganado/edit', { recepcion , esCria, esEngorda, esSacrificio, fechaFormateada});
+        res.render('ganado/edit', { recepcion , ganaderos, esCria, esEngorda, esSacrificio, fechaFormateada});
     } catch (error) {
         console.log(error);
         res.status(500).send("Error al cargar la página de edición");

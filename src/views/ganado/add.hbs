@@ -22,12 +22,24 @@
                     </div>
                     <div class="mb-1">
                         <label for="origin">Origen</label>
-                        <input type="text" name="origin" id="origin" placeholder="Ingresa el origen" class="form-control rounded-2 bg-white text-dark">
+                        <select name="origin" id="origin" class="form-control rounded-2 bg-white text-dark" required>
+                            <option value="">Selecciona PSG de Origen</option>
+                            {{#each ganaderos}}
+                                <option value="{{psg}}">{{nombre}} - {{psg}}</option>
+                            {{/each}}
+                        </select>
                     </div>
+
                     <div class="mb-1">
                         <label for="destino">Destino</label>
-                        <input type="text" name="destino" id="destino" placeholder="Ingresa el destino" class="form-control rounded-2 bg-white text-dark">
+                        <select name="destino" id="destino" class="form-control rounded-2 bg-white text-dark" required>
+                            <option value="">Selecciona PSG de Destino</option>
+                            {{#each ganaderos}}
+                                <option value="{{psg}}">{{nombre}} - {{psg}}</option>
+                            {{/each}}
+                        </select>
                     </div>
+
                     <div class="text-center">
                         <button class="btn btn-primary"><i class="bi bi-person-check-fill"></i> Agregar Ganado</button>
                     </div>

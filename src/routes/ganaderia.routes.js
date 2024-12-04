@@ -39,12 +39,10 @@ router.get('/tratamientos/edit/:id', isAuthenticated, renderTratamientoEdit); //
 router.post('/tratamientos/edit/:id', isAuthenticated, editTratamiento); // Ruta para actualizar un tratamiento (editado)
 router.get('/tratamientos/delete/:id', isAuthenticated, deleteTratamiento); // Ruta para eliminar un tratamiento
 
-import { createRecepcionGanado, addAnimales, saveRecepcion, showAddAnimalesForm, listRecepciones,deleteRecepcion,editarRecepcion,actualizarRecepcion, renderGanado } from '../controllers/ganado.controllers.js';
+import { FormularioRecepcion, createRecepcionGanado, addAnimales, saveRecepcion, showAddAnimalesForm, listRecepciones,deleteRecepcion,editarRecepcion,actualizarRecepcion, renderGanado } from '../controllers/ganado.controllers.js';
 
 // Ruta para mostrar el formulario de recepción de ganado (Paso 1)
-router.get('/ganado/add', (req, res) => {
-    res.render('ganado/add');  // Vista para agregar la recepción de ganado
-});
+router.get('/ganado/add', isAuthenticated, FormularioRecepcion);
 // Ruta para procesar los datos del formulario de recepción de ganado (Paso 1)
 router.post('/ganado/add', isAuthenticated, createRecepcionGanado);  // Recibir los datos y guardar la recepción
 // Ruta para mostrar el formulario de agregar animales (Paso 2)

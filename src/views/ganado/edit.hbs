@@ -22,11 +22,22 @@
                     </div>
                     <div class="mb-1">
                         <label for="origin">Origen</label>
-                        <input type="text" name="origin" id="origin" class="form-control rounded-2 bg-white text-dark" value="{{recepcion.origin}}">
+                        <select name="origin" id="origin" class="form-control rounded-2 bg-white text-dark" required>
+                            <option value="{{recepcion.origin}}">{{recepcion.origin}}</option>
+                            {{#each ganaderos}}
+                                <option value="{{psg}}">{{nombre}} - {{psg}}</option>
+                            {{/each}}
+                        </select>
                     </div>
+
                     <div class="mb-1">
                         <label for="destino">Destino</label>
-                        <input type="text" name="destino" id="destino" class="form-control rounded-2 bg-white text-dark" value="{{recepcion.destino}}">
+                        <select name="destino" id="destino" class="form-control rounded-2 bg-white text-dark" required>
+                            <option value="{{recepcion.destino}}">{{recepcion.destino}}</option>
+                            {{#each ganaderos}}
+                                <option value="{{psg}}">{{nombre}} - {{psg}}</option>
+                            {{/each}}
+                        </select>
                     </div>
                     <div class="text-center">
                         <button class="btn btn-success"><i class="bi bi-pencil-fill"></i> Guardar Cambios</button>
