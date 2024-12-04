@@ -7,7 +7,12 @@
                 <form action="/tratamientos" method="POST">
                     <div class="mb-1">
                         <label for="numeroArete">Número de Arete</label>
-                        <input type="text" name="numeroArete" placeholder="Ingresa el número de arete" id="numeroArete" class="form-control rounded-2 bg-white text-dark">
+                        <select name="numeroArete" id="numeroArete" class="form-control rounded-2 bg-white text-dark">
+                            <option value="">Selecciona un Arete</option>
+                            {{#each aretesDisponibles}}
+                                <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        </select>
                     </div>
                     <div class="mb-1">
                         <label for="tipoTratamiento">Tipo de Tratamiento</label>

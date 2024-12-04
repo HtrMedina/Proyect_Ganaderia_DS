@@ -1,5 +1,6 @@
 import Tratamiento from '../models/Tratamiento.js';
 import Almacen from '../models/Almacen.js'; 
+import { Ganado } from '../models/Ganado.js';
 
 // Mostrar todos los tratamientos
 export const renderTratamientos = async (req, res) => {
@@ -8,6 +9,14 @@ export const renderTratamientos = async (req, res) => {
         
         // Obtener todos los medicamentos del almacen
         const medicamentos = await Almacen.find({ category: 'Medicamento' }).lean();
+
+        // Obtener ganado con estado de salud 'Enfermo' o 'Herido'
+        const ganadoConProblemas = await Ganado.find({
+            'ganado.healthStatus': { $in: ['Enfermo', 'Herido'] }
+        }).lean();
+
+        // Extraer los números de arete de los animales con problemas de salud
+        const aretesDisponibles = ganadoConProblemas.map(g => g.ganado.filter(animal => animal.healthStatus === 'Enfermo' || animal.healthStatus === 'Herido').map(animal => animal.earTag)).flat();
 
         // Formatear la fecha de cada tratamiento antes de pasarla a la vista
         tratamientos.forEach(tratamiento => {
@@ -21,12 +30,14 @@ export const renderTratamientos = async (req, res) => {
             tratamiento.fechaFormateada = `${dia}/${mes}/${anio}`;
         });
 
-        res.render("tratamientos/index", { tratamientos, medicamentos });  // Pasar los tratamientos y medicamentos a la vista
+        // Pasar los tratamientos, medicamentos y números de arete a la vista
+        res.render("tratamientos/index", { tratamientos, medicamentos, aretesDisponibles });  // Pasar los datos a la vista
     } catch (error) {
         console.log(error);
         res.status(500).send("Error al cargar los tratamientos");
     }
 };
+
 
 
 // Crear un nuevo tratamiento
