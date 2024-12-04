@@ -52,12 +52,12 @@
                 <thead>
                     <tr>
                         <th>N.</th>
-                        <th>Número de Arete</th>
-                        <th>Tipo de Tratamiento</th>
+                        <th>Número_Arete</th>
+                        <th>Tratamiento</th>
                         <th>Propósito</th>
                         <th>Medicamento</th>
-                        <th>Fecha de Colocación</th>
-                        <th>¿Quién lo Colocó?</th>
+                        <th>Fecha</th>
+                        <th>¿Quién colocó?</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -72,9 +72,13 @@
                         <td>{{fechaFormateada}}</td>
                         <td>{{quienColoco}}</td>
                         <td>
-                            <a href="/tratamientos/edit/{{_id}}" class="btn btn-info"><i class="bi bi-pencil-square"></i></a>
-                            <a href="/tratamientos/delete/{{_id}}" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="/tratamientos/edit/{{_id}}" class="btn btn-info"><i class="bi bi-pencil-square"></i></a>
+                                <a href="/tratamientos/delete/{{_id}}" class="btn btn-danger"><i class="bi bi-trash3"></i></a>
+                            </div>
                         </td>
+
+
                     </tr>
                     {{/each}}
                 </tbody>
