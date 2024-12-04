@@ -6,6 +6,11 @@ const ganadoSchema = new mongoose.Schema({
   arrivalDate: { type: Date, default: Date.now },
   origin: { type: String }, // Origen del ganado (PSG, Nombre, etc.)
   destino: { type: String }, // Destino del ganado (PSG, Nombre, etc.)
+  separacion: {
+    type: String,
+    enum: ['Venta/Tercero', 'Propio/Rancho'],
+    required: true,
+  },
   ganado:[{
   earTag: { type: String, required: true}, // Número de arete
   sex: { type: String, enum: ['Toro', 'Vaca'], required: true }, // Sexo

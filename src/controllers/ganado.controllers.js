@@ -16,7 +16,7 @@ export const FormularioRecepcion = async (req, res) => {
 
 // Crear recepción de ganado (Paso 1)
 export const createRecepcionGanado = async (req, res) => {
-    const { reemo, motivo, arrivalDate, origin, destino } = req.body;
+    const { reemo, motivo, arrivalDate, origin, destino, separacion } = req.body;
     try {
         const recepcion = new Ganado({
             reemo,
@@ -24,6 +24,7 @@ export const createRecepcionGanado = async (req, res) => {
             arrivalDate,
             origin,
             destino,
+            separacion,
             ganado: [] // Inicializamos el array vacío para los animales
         });
         // Guardar los cambios en la base de datos
@@ -123,11 +124,12 @@ export const listRecepciones = async (req, res) => {
         // Buscar todas las recepciones de ganado
         const recepciones = await Ganado.find().lean();
 
-                // Formatear la fecha antes de pasarla a la vista
-                recepciones.forEach(recepcion => {
-                    // Cambiar el formato de la fecha
-                    recepcion.arrivalDate = recepcion.arrivalDate.toLocaleDateString('es-ES');  // Formato: dd/mm/yyyy
-                });
+            // Formatear la fecha antes de pasarla a la vista
+            recepciones.forEach(recepcion => {
+            // Cambiar el formato de la fecha
+            recepcion.arrivalDate = recepcion.arrivalDate.toLocaleDateString('es-ES');  // Formato: dd/mm/yyyy
+            recepcion.isSeparacion = recepcion.separacion === 'Venta/Tercero';
+            });
 
         // Renderizar la vista 'ganado/list', pasando las recepciones
         res.render('ganado/list', { recepciones });
@@ -238,3 +240,29 @@ export const renderGanado = async (req, res) => {
         res.status(500).send("Error al cargar los animales");
     }
 };
+
+// Controlador para cambiar el valor de separacion
+export const cambiarSeparacion = async (req, res) => {
+    const { id } = req.params; // Obtener el ID de la recepción de ganado desde la URL
+  
+    try {
+      const ganado = await Ganado.findById(id); // Buscar el documento de Ganado por ID
+  
+      if (!ganado) {
+        return res.status(404).send('Ganado no encontrado');
+      }
+  
+      // Alternar entre 'venta/tercero' y 'propio/rancho'
+      ganado.separacion = (ganado.separacion === 'Venta/Tercero') ? 'Propio/Rancho' : 'Venta/Tercero';
+  
+      // Guardar los cambios en la base de datos
+      await ganado.save();
+  
+      // Redirigir a la página de detalles de la recepción de ganado
+      res.redirect('/ganado/list');
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Error al actualizar el campo separacion');
+    }
+  };
+  

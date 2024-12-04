@@ -15,6 +15,7 @@
                             <th>Fecha de Recepción</th>
                             <th>Origen</th>
                             <th>Destino</th>
+                            <th>Destinado a</th>
                             <th>Animales</th>
                             <th>Acciones</th>
                         </tr>
@@ -28,6 +29,14 @@
                                 <td>{{arrivalDate}}</td>
                                 <td>{{origin}}</td>
                                 <td>{{destino}}</td>
+                                <td>
+                                <form action="/ganado/{{_id}}/cambiar-separacion" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-sm {{#if isSeparacion}}btn-dark{{else}}btn-light{{/if}}">
+                                    {{#if isSeparacion}}Venta/Tercero{{else}}Propio/Rancho{{/if}}
+                                    </button>
+                                </form>
+                                </td>
+
                                 <td>{{#if ganado}}{{ganado.length}}{{else}}0{{/if}}</td> <!-- Mostrar número de animales -->
                                 <td>
                                     <a href="/ganado/listGanado/{{_id}}" class="btn btn-warning btn-sm">Ver Animales</a>
