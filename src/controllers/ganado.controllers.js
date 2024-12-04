@@ -59,7 +59,18 @@ export const showAddAnimalesForm = async (req, res) => {
 // Agregar animales a una recepción de ganado (Paso 2)
 export const addAnimales = async (req, res) => {
     const { reemo } = req.params; // ID de la recepción de ganado
-    const { earTag, sex, age, classification, weight, price, healthStatus } = req.body;
+    const { earTag, sex, age, weight, price, healthStatus } = req.body;
+
+    let classification;  // Definir la variable para clasificación
+
+    // Determinar la clasificación en función de la edad
+    if (age >= 1 && age <= 15) {
+        classification = "Becerro/Becerra";
+    } else if (age >= 16 && age <= 24) {
+        classification = "Torete/Vacona";
+    } else if (age >= 25) {
+        classification = "Toro/Vaca";
+    }
 
     try {
         const recepcion = await Ganado.findById(reemo); // Buscar la recepción de ganado por ID

@@ -7,7 +7,7 @@
                 <form action="/tratamientos" method="POST">
                     <div class="mb-1">
                         <label for="numeroArete">Número de Arete</label>
-                        <select name="numeroArete" id="numeroArete" class="form-control rounded-2 bg-white text-dark">
+                        <select name="numeroArete" id="numeroArete" class="form-control rounded-2 bg-white text-dark" required>
                             <option value="">Selecciona un Arete</option>
                             {{#each aretesDisponibles}}
                                 <option value="{{this}}">{{this}}</option>
@@ -16,18 +16,18 @@
                     </div>
                     <div class="mb-1">
                         <label for="tipoTratamiento">Tipo de Tratamiento</label>
-                        <select name="tipoTratamiento" id="tipoTratamiento" class="form-control rounded-2 bg-white text-dark">
+                        <select name="tipoTratamiento" id="tipoTratamiento" class="form-control rounded-2 bg-white text-dark" required>
                             <option value="Preventivo">Preventivo</option>
                             <option value="Curativo">Curativo</option>
                         </select>
                     </div>
                     <div class="mb-1">
                         <label for="proposito">Propósito</label>
-                        <input type="text" name="proposito" placeholder="Ingresa el propósito del tratamiento" id="proposito" class="form-control rounded-2 bg-white text-dark">
+                        <input type="text" name="proposito" placeholder="Ingresa el propósito del tratamiento" id="proposito" class="form-control rounded-2 bg-white text-dark" required>
                     </div>
                     <div class="mb-1">
                         <label for="nombreMedicamento">Nombre del Medicamento</label>
-                        <select name="nombreMedicamento" id="nombreMedicamento" class="form-control rounded-2 bg-white text-dark">
+                        <select name="nombreMedicamento" id="nombreMedicamento" class="form-control rounded-2 bg-white text-dark" required>
                             <option value="">Selecciona un Medicamento</option>
                             {{#each medicamentos}}
                                 <option value="{{name}}">{{name}}</option>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="quienColoco">¿Quién lo colocó?</label>
-                        <input type="text" name="quienColoco" placeholder="Ingresa el nombre de quien colocó el tratamiento" id="quienColoco" class="form-control rounded-2 bg-white text-dark">
+                        <input type="text" name="quienColoco" placeholder="Ingresa el nombre de quien colocó el tratamiento" id="quienColoco" class="form-control rounded-2 bg-white text-dark" required>
                     </div>
                     <div class="text-center">
                         <button class="btn btn-primary"><i class="bi bi-person-check-fill"></i> Agregar Tratamiento</button>
