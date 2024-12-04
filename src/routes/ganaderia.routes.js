@@ -22,7 +22,7 @@ router.get('/ganaderos/edit/:id', isAuthenticated, renderGanaderoEdit); // Ruta 
 router.post('/ganaderos/edit/:id', isAuthenticated, editGanadero); // Ruta para editar un ganadero
 router.get('/ganaderos/delete/:id', isAuthenticated, deleteGanadero); // Ruta para eliminar un ganadero
 
-import { renderDietaForm, createNewDieta, renderDietas, renderEditForm, updateDieta, deleteDieta, } from '../controllers/dietas.controllers.js';
+import { renderDietaForm, createNewDieta, renderDietas, renderEditForm, updateDieta, deleteDieta, alimentarDieta } from '../controllers/dietas.controllers.js';
 
 router.get('/dietas', isAuthenticated, renderDietas); // Mostrar todas las dietas
 router.get('/dietas/new', isAuthenticated, renderDietaForm); // Mostrar formulario para crear una nueva dieta
@@ -30,6 +30,7 @@ router.post('/dietas', isAuthenticated, createNewDieta); // Crear una nueva diet
 router.get('/dietas/edit/:id', isAuthenticated, renderEditForm); // Mostrar formulario de edición
 router.post('/dietas/edit/:id', isAuthenticated, updateDieta); // Actualizar una dieta
 router.post('/dietas/delete/:id', isAuthenticated, deleteDieta); // Eliminar una dieta
+router.post('/dietas/alimentar/:id', isAuthenticated, alimentarDieta); //Alimentar 
 
 import { renderTratamientos, createTratamiento, renderTratamientoEdit, editTratamiento, deleteTratamiento } from '../controllers/tratamiento.controllers.js';
   

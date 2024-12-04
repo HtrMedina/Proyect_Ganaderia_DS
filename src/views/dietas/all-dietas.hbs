@@ -24,10 +24,15 @@
                 <li>{{ingrediente}}: {{cantidad}} Kgs</li>
               {{/each}}
             </ul>
-            <!-- Formulario para eliminar la dieta -->
-            <form action="/dietas/delete/{{_id}}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta dieta?');">
+            <!-- Botón de eliminar -->
+            <form action="/dietas/delete/{{_id}}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta dieta?');" class="d-inline-block">
               <input type="hidden" name="_method" value="DELETE" />
               <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+
+            <!-- Botón de alimentar -->
+            <form action="/dietas/alimentar/{{_id}}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas alimentar esta dieta?');" class="d-inline-block ml-2">
+              <button type="submit" class="btn btn-info">Alimentar</button>
             </form>
           </div>
         </div>

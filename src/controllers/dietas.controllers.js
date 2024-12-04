@@ -1,4 +1,5 @@
 import Dieta from "../models/Dietas.js";
+import Almacen from "../models/Almacen.js";
 
 // Renderizar el formulario para crear una nueva dieta
 export const renderDietaForm = (req, res) => {
@@ -147,6 +148,52 @@ export const deleteDieta = async (req, res) => {
   } catch (error) {
     console.log(error);
     req.flash("error_msg", "Hubo un error al eliminar la dieta.");
+    res.redirect("/dietas");
+  }
+};
+
+
+export const alimentarDieta = async (req, res) => {
+  try {
+    const { id } = req.params;  // Obtenemos el id de la dieta
+    const dieta = await Dieta.findById(id);  // Buscamos la dieta por ID
+
+    if (!dieta) {
+      req.flash("error_msg", "Dieta no encontrada");
+      return res.redirect("/dietas");
+    }
+
+    // Iteramos sobre los ingredientes de la dieta
+    for (let ingredienteObj of dieta.ingredientes) {
+      const { ingrediente, cantidad } = ingredienteObj;
+
+      // Buscamos el producto en el almacen por nombre
+      const producto = await Almacen.findOne({ name: ingrediente });
+
+      if (!producto) {
+        req.flash("error_msg", `Ingrediente ${ingrediente} no encontrado en el inventario.`);
+        return res.redirect("/dietas");
+      }
+
+      // Verificamos si hay suficiente cantidad en el inventario
+      if (producto.quantity < cantidad) {
+        req.flash("error_msg", `No hay suficiente cantidad de ${ingrediente} en el inventario.`);
+        return res.redirect("/dietas");
+      }
+
+      // Restamos la cantidad del producto en el inventario
+      producto.quantity -= cantidad;
+
+      // Guardamos los cambios en el inventario
+      await producto.save();
+    }
+
+    req.flash("success_msg", "Dieta alimentada correctamente, inventario actualizado.");
+    res.redirect("/dietas");  // Redirigimos de nuevo a la lista de dietas
+
+  } catch (error) {
+    console.log(error);
+    req.flash("error_msg", "Hubo un error al alimentar la dieta.");
     res.redirect("/dietas");
   }
 };
