@@ -121,23 +121,34 @@ export const saveRecepcion = async (req, res) => {
 // Mostrar todas las recepciones de ganado
 export const listRecepciones = async (req, res) => {
     try {
-        // Buscar todas las recepciones de ganado
-        const recepciones = await Ganado.find().lean();
+        const { separacion } = req.query;  // Obtener el valor del filtro desde la query string
 
-            // Formatear la fecha antes de pasarla a la vista
-            recepciones.forEach(recepcion => {
-            // Cambiar el formato de la fecha
+        let query = {};
+        
+        // Si se especifica un filtro, agregarlo a la consulta
+        if (separacion) {
+            query.separacion = separacion;
+        }
+
+        // Buscar las recepciones de ganado aplicando el filtro (si existe)
+        const recepciones = await Ganado.find(query).lean();
+
+        // Formatear la fecha antes de pasarla a la vista
+        recepciones.forEach(recepcion => {
             recepcion.arrivalDate = recepcion.arrivalDate.toLocaleDateString('es-ES');  // Formato: dd/mm/yyyy
             recepcion.isSeparacion = recepcion.separacion === 'Venta/Tercero';
-            });
+        });
 
-        // Renderizar la vista 'ganado/list', pasando las recepciones
-        res.render('ganado/list', { recepciones });
+        // Renderizar la vista 'ganado/list', pasando las recepciones y el filtro seleccionado
+        res.render('ganado/list', { recepciones, selectedSeparacion: separacion });
     } catch (error) {
         console.log(error);
         res.status(500).send("Error al obtener las recepciones de ganado");
     }
 };
+
+
+
 
 // Eliminar una recepción de ganado
 export const deleteRecepcion = async (req, res) => {
@@ -266,3 +277,5 @@ export const cambiarSeparacion = async (req, res) => {
     }
   };
   
+
+

@@ -2,51 +2,58 @@
   <div class="row">
     <div class="col-md-12">
       <div class="card card-body p-3 rounded-3 bg-dark text-white">
-  <!-- Botón de Agregar Nueva Venta en la parte superior -->
-  <div class="text-center mb-3">
-    <a href="/ventas/add" class="btn btn-primary">Agregar Nueva Venta</a>
-  </div>
-  
-  <h3 class="text-center">Ventas de Ganado</h3>
-  
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Reemo</th>
-        <th>Cliente</th>
-        <th>Total</th>
-        <th>Fecha de Venta</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each ventas}}
-        <tr>
-          <td>{{@index}}</td>
-          <td>{{reemo}}</td>
-          <td>{{customer}}</td>
-          <td>${{totalAmount}}</td>
-          <td>{{saleDateFormatted}}</td>
-          <td>
-            <!-- Formulario para cambiar el estado -->
-            <form action="/ventas/{{_id}}/cambiar-status" method="POST" class="d-inline">
-              <button type="submit" class="btn btn-sm {{#if isPendiente}}btn-warning{{else}}btn-success{{/if}}">
-                {{#if isPendiente}}Pendiente{{else}}Pagado{{/if}}
-              </button>
-            </form>
-          </td>
-
-
-          <td>
-            <a href="/ventas/{{_id}}" class="btn btn-info btn-sm">Ver Detalles</a>
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  </div>
-  </div>
+        
+        <!-- Formulario de Filtrado en la misma línea -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <a href="/ventas/add" class="btn btn-primary">Agregar Nueva Venta</a>
+          
+          <!-- Menú desplegable para filtrar por 'Estado' -->
+          <form action="/ventas" method="GET" class="d-inline">
+            <select name="status" class="form-select" onchange="this.form.submit()">
+              <option value="">Todas las Ventas</option>
+              <option value="Pendiente" {{#if (eq status "Pendiente")}}selected{{/if}}>Pendiente</option>
+              <option value="Pagado" {{#if (eq status "Pagado")}}selected{{/if}}>Pagado</option>
+            </select>
+          </form>
+        </div>
+        
+        <h3 class="text-center">Ventas de Ganado</h3>
+        
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Reemo</th>
+              <th>Cliente</th>
+              <th>Total</th>
+              <th>Fecha de Venta</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each ventas}}
+              <tr>
+                <td>{{@index}}</td>
+                <td>{{reemo}}</td>
+                <td>{{customer}}</td>
+                <td>${{totalAmount}}</td>
+                <td>{{saleDateFormatted}}</td>
+                <td>
+                  <form action="/ventas/{{_id}}/cambiar-status" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-sm {{#if isPendiente}}btn-warning{{else}}btn-success{{/if}}">
+                      {{#if isPendiente}}Pendiente{{else}}Pagado{{/if}}
+                    </button>
+                  </form>
+                </td>
+                <td>
+                  <a href="/ventas/{{_id}}" class="btn btn-info btn-sm">Ver Detalles</a>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

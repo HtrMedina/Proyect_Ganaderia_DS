@@ -35,15 +35,23 @@ export const cambiarStatusVenta = async (req, res) => {
 };
 
 
-// Renderizar todas las ventas
+// Renderizar todas las ventas con filtro de estado
 export const renderVentas = async (req, res) => {
-    try {
-      // Obtenemos todas las ventas y usamos populate para llenar los datos de 'ganado'
-      const ventas = await Venta.find()
-        .populate('ganado')  // Poblamos el campo ganado (suponiendo que es un arreglo de ObjectId que hace referencia a Ganado)
-        .lean();  // Usamos .lean() para obtener datos simples sin la funcionalidad de Mongoose Document
-  
-    // Formatear las fechas con Intl.DateTimeFormat
+  try {
+    const { status } = req.query;  // Obtener el parámetro 'status' desde la query string
+
+    // Construir la consulta para filtrar las ventas si se especifica un estado
+    let query = {};
+    if (status) {
+      query.status = status;  // Filtramos por el estado 'Pendiente' o 'Pagado'
+    }
+
+    // Obtenemos las ventas aplicando el filtro
+    const ventas = await Venta.find(query)
+      .populate('ganado')  // Poblamos el campo ganado
+      .lean();  // Usamos .lean() para obtener datos sin la funcionalidad de Mongoose Document
+
+    // Formatear las fechas y calcular el estado del botón
     ventas.forEach(venta => {
       const formattedDate = new Intl.DateTimeFormat('es-ES', {
         day: '2-digit',
@@ -51,17 +59,17 @@ export const renderVentas = async (req, res) => {
         year: 'numeric',
       }).format(new Date(venta.saleDate));
       venta.saleDateFormatted = formattedDate;
-      // Calcular el estado para el botón
-      venta.isPendiente = venta.status === 'Pendiente';  // Agregamos una propiedad que indica si está pendiente
+      venta.isPendiente = venta.status === 'Pendiente';  // Agregar propiedad isPendiente
     });
 
-      // Renderizamos las ventas en la vista
-      res.render('ventas/all-ventas', { ventas });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error al obtener las ventas');
-    }
-  };
+    // Renderizamos la vista con las ventas filtradas
+    res.render('ventas/all-ventas', { ventas, status });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener las ventas');
+  }
+};
+
   
 
 // Crear nueva venta
